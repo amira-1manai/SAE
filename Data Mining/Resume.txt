@@ -1,0 +1,94 @@
+#Install package x:
+	library(x)
+
+#Charger une DB x :
+	data(x)
+
+#Visualiser la db x :
+	view(x)
+
+#Lister les noms des var. dans db :
+	names(db)
+
+#Changer le noms de la var. x en y :
+	rename.variable(db, c("x"),c("y"))
+
+#voir si une var x est quali. :
+	is.factor(db$x)
+
+#Changer la var x quali. en quanti. :
+	db$x<-as.factor(db$x)
+
+#Afficher les champs d'une variable x :
+	levels(db$x)
+
+#Afficher le nombre des champs d'une var. x :
+	nlevels(db$x)
+
+#Regrouper les champs y dans la var x en un nouveau champs z :
+	db$x= fct_recode(db$x, "z"="y")
+
+#Création d'un vecteur :
+	c(1,2,3,4)
+	c("bleu","noir","blanc")
+
+#Création d'une matrice :
+	matrix(c(1,2,3,4,5,6),nrow=3,ncol=2)
+
+#Création d'une liste :
+	list(c(1,2,3),c("fille","garçon'))
+
+#Création d'un data frame :
+	data.frame(c("indiv1","indiv2"),c(12,13.4))
+
+#Importation des données :
+	read.table(file=file.choose(),header=TRUE,sep=";",dec=".")
+
+#Standarisation des valeurs
+	scale()
+
+#Donner le type d'une variable
+	str()
+
+#Afficher tableau
+	table(baby$age) 
+
+#Trier le tableau
+	sort(table(baby$age))
+
+#Donner le mod
+	names(which.max(table(baby$age)))
+
+#Afficher le boite moustache de la var. x
+	boxplot(db$x)
+
+#Fonction remplacer des val >80 par NA
+	which(baby$age>80)
+	baby$age[400]<-NA
+	baby$age[429]<-NA
+
+#Calculer la moyenne de la col. x pour tous ses val. y de la col. z
+	mean(DB[x==c("y"),]$z,na.rm = T)
+	
+#Afficher s'il y a des erreurs dans un fichier
+	na.fail(x)
+
+#Imputer par Hmisc
+	library(Hmisc)
+	dat.moy=impute(gazela$NOX, fun=mean)
+	class(dat.moy)
+	summary(dat.moy)
+	dat.moy=as.vector(dat.moy)
+
+#Imputer avec VIM
+	library(VIM)
+	datt=kNN(gazela)
+	View(datt)
+	summary(datt)
+
+#Calcul moyenne de x
+	mean(data$x)
+
+#Calcul écart type de x
+	sd(data$x)
+

@@ -1,0 +1,73 @@
+sqlplus
+connect /as sysdba
+
+1.
+Create profile profil_tp3 limit
+sessions_per_user 2
+connect_time 7200
+idle_time 180
+password_lock_time 5/1440
+failed_login_attempts 1
+;
+
+2.
+create user TP3 identified by system
+default tablespace USERS
+quota 10M on USERS
+profile profil_tp3
+temporary tablespace TEMP
+;
+
+3.
+select profile from dba_users where username='TP3';
+
+4.
+select username from dba_users;
+
+5.
+create or replace procedure list_profiles
+  2  is
+  3  begin
+  4  for i in (select distinct profile p from dba_profiles) LOOP
+  5  dbms_output.put_line (i.p);
+  6  end loop;
+  7  end;
+  8  /
+set serveroutput on;
+execute list_profiles;
+
+6.
+create function verif_password1(p_username varchar2, p_password varchar2)
+  2  returns boolean
+  3  as
+  4  begin
+  5  if (length(p_password)>6 and p_password!=p_username)
+  6  return true
+  7  else
+  8  return false
+  9  end
+ 10  go
+ 11  /
+
+7.
+alter profile profil_tp3 limit
+  2  password_verify_function verif_password1;
+
+8.
+create user testtp31 by testtp31
+  2  default tablespace users
+  3  profile profil_tp3
+  4  ;
+
+create user testtp32 by system
+  2  default tablespace users
+  3  profile profil_tp3
+  4  ;
+
+create user testtp33 by managers
+  2  default tablespace users
+  3  profile profil_tp3
+  4  ;
+
+9.
+sysmail_delete_profile_sp{[@profile_name =]'profil_tp3'}

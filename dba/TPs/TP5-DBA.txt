@@ -1,0 +1,60 @@
+Ex 1:
+1.
+	alter system set audit_trail=DB,extended scope=spfile;
+	shutdown
+	startup
+	audit create session;
+2.
+	create user TP4 identified by TP4 default tablespace users quota 5M on users;
+	grant create session, create table, create procedure to TP4;
+3.
+	audit table by TP4 by access;
+	audit insert table, update table, delete table by TP4 by access;
+4.
+	connect TP4/TP4
+	insert into test values(1,2);
+	update test set a=2 where b=2;
+	select * from test;
+	delete from test;
+	drop table test;
+5.
+	desc dba_audit_object;
+	select username, timestamp, action_name, obj_name from dba_audit_object where obj_name='TEST';
+6.	
+	select count(*) from dba_audit_session where username='TP4';
+
+Ex 2:
+1.
+	create user TP41 identified by TP41 default tablespace users quota 2M on users;
+	grant dba to TP41;
+2.
+	audit create session by TP41;
+	select * from dba_priv_audit_opts where user_name='TP41';
+3.
+	connect TP41/TP41
+	create table table1(a number);
+	create table table2(b number);
+4.
+	audit insert, update, delete on TP41.table1 by session;
+	audit select on TP41.table2;
+5.
+	desc dba_obj_audit_opts;
+	select ins, sel, upd, del, object_name from dba_obj_audit_opts;	
+
+6.
+	select a from table1;
+	select bb from table1;
+	select b from table2;
+	insert into table1 values (1);
+	select b from table2;
+	select a from table1;
+	select action_name , obj_name, sql_text from dba_audit_object where username='TD41';
+
+7.
+	create table Table3(c number);
+	alter table table3
+	add (d number);
+
+8.
+	NOAUDIT select, delete on td41.table1;
+	select object_name, INS, UPD, DEL, SEL from dba_obj_audit_opts;

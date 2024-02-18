@@ -1,0 +1,78 @@
+	1.
+connect /as sysdba
+create user user1 identified by pwd1;
+create user user2 identified by pwd2;
+
+	2.
+grant connect, resource to user1;
+grant connect, resource to user2;
+grant exp_full_database, imp_full_database to user1;
+grant exp_full_database, imp_full_database to user2;
+
+	3.
+connect user1/pwd1
+create table test1(a1 number,b1 number);
+create table test2(a2 number,b2 number);
+
+	4.
+insert into test1 values(1,2);
+insert into test1 values(1,3);
+insert into test1 values(1,4);
+insert into test2 values(2,2);
+insert into test2 values(2,3);
+insert into test2 values(2,4);
+commit;
+
+	5.
+create or replace directory directory1 as 'C:\oraclexe\app\oracle';
+
+	6.
+connect /as sysdba
+grant read, write on directory directory1 to user1;
+grant read, write on directory directory1 to user2;
+
+	7.
+host
+expdp user1/pwd1 directory=directory1 dumpfile=user1.dump
+
+	8.
+impdp user2/pwd2 content=METADATA_ONLY tables=user1.test1 directory=directory1 dumpfile=user1.dump remap_schema=user1:user2
+
+	9.
+=> La stucture de la table test1 importée
+=> Vide car on n'a importer que la structure
+
+	10.
+impdp user2/pwd2 tables=user1.test2 directory=directory1 dumpfile=user1.dump remap_schema=user1:user2
+
+	11.
+=> Les 2 tables test1 et test2 importées
+=> Les valeurs passées lors de la question 4
+
+________________________________________________________________________________________________________________________________________________________________
+
+	1.
+create table Artiste(identifiant number primary key, nom varchar2(30), prenom varchar2(30), pays varchar2(30));
+
+	2.
+=> Création d'un fichier artiste.ctl
+load data infile 'C:\artiste.txt'
+badfile 'artisteB.bad'
+discardfile 'artisteD.dsc'
+insert into table artiste
+when (01)="0"
+fields terminated by ','
+(identifiant, nom, prenom, pays)
+
+	3.
+create sequence db_seq start with 1 increment by 1;
+=> Création d'un fichier emp.ctl
+load data infile 'emp.dat' badfile 'bad.bad'
+into table modified_data( rec_no "db_seq.nextval", region CONSTANT '31', time_loaded "to_char(SYSDATE, 'HH24:MI')", data1 position(1:5) ":data1/100", data2 position(6!15) "upper(:data2)", data3 position(16:22) "to_date(:data3, 'YYMMDD')" )
+
+	4.
+create sequence db_seq start with 1 increment by 1;
+=> Création d'un fichier emp1.ctl
+load data infile 'emp1.dat'
+append into table emp when (05)= "B" and (15:20)="990112"
+(empID position (01:04), nom position (05:14), date_emb (15:20) )

@@ -1,0 +1,85 @@
+Formation 1 ----> 1 Detail_formation 
+**********************************
+Formation   @OneToOne
+	    private Detail_formation detail_f;
+**********************************************
+Detail_formation : on ne met rien 
+**********************************************
+
+
+
+
+Formation 1 ---> * Detail_formation 
+***********************************
+Formation   @OneToMany(cascade= CascadeType.ALL)
+	    private List<Detail_formation> detail_f;
+*****************************************************
+Detail_Formation : Rien
+***************************************************
+
+
+Formation * ---> 1 Detail_fomation 
+********************************************************
+Fomation    @ManyToOne	
+	    Datail_Formation detail_f;
+**************************************************
+Detail_formation : RIEN 
+
+
+
+
+Formation * ---> * Detail_formation
+*************************************************
+Fomation 	@ManyToMany ( cascade = cascadeType.all)
+		private List<Detail_formation> detail_f
+******************************************************
+Detail_formation 	RIEN	 
+
+Departement * ---- 1 Entreprise    ( sans flech)       
+**************************************************************
+Departement	@ManyToOne
+		private Entreprise entreprise;
+*****************************************************************************
+Entreprise      @OneToMany(mappedBy="entreprise")
+		private List<Departement>departements = new ArrayList<>();
+*****************************************************************************
+
+
+
+
+Departement * ---- * Employe
+**************************************************************************
+DEPARTEMENT	
+@JsonIgnore
+@ManyToMany
+		private List<Employe> employes;
+***************************************************************************
+EMPLOYE		@ManyToMany(mappedBy="employes",fetch=FetchType.EAGER )
+		private List<Departement> departements;
+***************************************************************************
+
+
+
+Departement 1 ---- * Mission
+**************************************************
+DEPARTEMENT	
+@JsonIgnore
+@OneToMany(mappedBy="departement")
+		private List<Mission> missions;
+**************************************************
+MISSION		@ManyToOne
+		private Departement departement;
+*************************************************
+
+
+
+
+Employe 1 --- 1 Contrat 
+********************************************
+Employe 	
+@JsonIgnore
+@OneToOne(mappedBy="employe")
+	        private Contrat contrat;
+********************************************
+Contrat 	@OneToOne
+		private Employe employe;

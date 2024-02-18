@@ -1,0 +1,36 @@
+	1.
+create tablespace TBL01
+datafile 'fd01tbl01.dbf' size 6M,
+'fd02tbl01.dbf' size 4M;
+
+	2.
+alter database default tablespace TBL01;
+
+	3.
+create tablespace TBL02
+datafile 'fd01tbl02.dbf' size 10M,
+'fd02tbl02.dbf' size 10M,
+'fd0xtbl02.dbf' size 5M;
+
+	4.
+alter tablespace TBL01 add datafile 'fd03tbl01.dbf' size 20M;
+
+	5.
+select tablespace_name from dba_tablespaces;
+
+	6.
+BEGIN
+for i in (select tablespace_name A, count(*) C from dba_data_files group by tablespace_name) LOOP
+dbms_output.put_line(i.A||' '||i.C);
+END LOOP;
+END;
+
+	7.
+alter tablespace TBL01 add datafile
+'fd04tbl01.dbf' size 2M autoextended on
+next 1M maxsize 4M;
+
+	8.
+create temporary tablespace MonTemp TEMPFILE 'montemp.dbf' SIZE 5M;
+ALTER DATABASE DEFAULT TEMPORARY TABLESPACE MonTemp;
+/

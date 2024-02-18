@@ -1,0 +1,78 @@
+nom : khaddem
+location : li t7eb
+create git repo : no
+language java
+type maven
+group : tn.esprit.spring
+artifact : khaddem
+(livrable final eli bech tet7at f serveur client aka .jar final)
+package name : 'name groupe'.'artifact'
+JDK : 1.8 oracle openjdk version 1.8.0.6()
+java : 8
+packaging : jar (el war for web applications, check abbreviation in google)
+
+version : la dernière version stable
+pas de snapshot car ils sont des versions en cours de developpement
+
+dependencies : 
+mysql driver
+spring data jpa
+spring web(pour l'exposition des services)
+lombok (voir google)
+
+
+
+
+-----------
+
+maven outil de construction de projet :
+-yasna3 livrable
+-ygéri les dépendances
+
+mvn repository
+mvnrepository.com (fih les livrables mta3 nes kol)
+maven va accèder au maven repo si il n'ya pas de livrable dans le local repo
+
+c'est un projet "mavenisé"
+
+
+livrable
+versioning 1.0 2.0 snapshot LTS etc...
+cycle de vie maven
+clean package install deploy etc..
+gradle(google)
+ - maven ? difference ?
+
+
+microservices
+
+why maven, why spring:
+
+avantage 1!
+-avantages d'utiliser version 2.7.3 : les dépendences sont tous installés et selon une arborescence selon chaque dependence (JPA, sql etc..)
+-les dependance sont basé sur "starter" : yjiblek les dependences , w les dependences mte3hom li lezmin (that's why tal9a "spring-boot-starter" fi kol dependence)
+-les version des dependences meme pas tal9ahom fel pom 5ater el maven wa7dou ythabet mel version needed
+
+
+avantage 2 :
+l 7ajet li tefhin kima affichage mta3 message wala ghirou, spring y7otlek 7aja par defaut w enti tajem tbadel
+ama 7ajet kima esm l base de données w 7ajet importante lo5ra , el spring 
+kol chay tal9ah f application properties file
+AVANTAGE 2 = configuration centralisée lkolha f application properties
+
+avantage 3 :
+serveur utilisé (tomcat)
+serveur ysobou w yasn3ou wa7dou l spring, houni 3andna tomcat houa wel version mte3ou w dependence tet7at l version li temchi m3a version mte3na (2.7.3 spring version)
+
+check on :
+monolith architecture
+microservices architecture
+
+
+
+
+
+
+
+
+

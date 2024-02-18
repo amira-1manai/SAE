@@ -1,0 +1,57 @@
+1.
+connect /as sysdba
+select * from dictionary where table_name='DBA_VIEWS';
+select * from dictionary order by table_name;
+
+2.
+select username, created from dba_users;
+
+3.
+desc v$session;
+
+4.
+select * from dictionary where table_name like'%SGA%';
+desc v$SGA;
+select * from v$SGA;
+select sum(value) from v$SGA;
+‎‎
+5.
+alter user hr identified by HR account unlock;  //Debloquer le compte HR
+connect		hr	HR
+desc user_objects;
+select object_name, object_type, created, last_ddl_time from user_objects;
+
+6.
+desc all_tables;
+select owner, table_name from all_tables;
+
+7.
+create or replace procedure list_tables
+  2  is
+  3  begin
+  4  for i in (select table_name T from user_tables) LOOP
+  5  dbms_output.put_line(i.T);
+  6  end loop;
+  7  end;
+  8  /
+set serveroutput on;
+execute list_tables;
+
+_____________________________
+8.
+select * from all_tables;
+
+9.
+select * from all_tables where owner like '%HR%';
+
+10.
+
+
+11.
+create or replace procedure MyPro @usrn varchar(30)
+  2  as
+  3  for i in (select table_name T from all_tables where OWNER=@usrn) LOOP
+  4  dbms_output.put_line(i.T);
+  5  end loop;
+  6  end;
+  7  /
